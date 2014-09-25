@@ -1,30 +1,6 @@
-# Django Initium
+Trust No One
+============
 
-A Django project start template.
-
-    $ django-admin.py startproject \
-          --template=http://bit.ly/django-initium \
-          --extension=py,sh \
-          project_name
-
-***Note:*** Please make sure that you provide all extensions above
- as they are required in order to render some helper tools.
-
-This project does not include any of the standard css/js libraries one
-would need to use this template (e.g. bootstrap) due to their
-rapid release cycles (it would clog the repo constantly updating them).
-To compensate for that, it includes a bunch of initialization scripts
-which will download the latest versions of the necessary libraries.
-They are located at `init` directory:
-
-    $ cd init && ./init-static.sh
-
-Also since there are git and mercurial people, this template includes
-ignore files for both vcs. So it might be a good idea to delete
-the innapropriate ignore list file:
-
-    $ # since we are at github
-    $ rm .hgignore   
 
 Credits
 -------
