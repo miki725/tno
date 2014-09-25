@@ -1,0 +1,17 @@
+breach-buster
+cryptography
+dateutils
+django-braces
+django-crispy-forms
+django-extensions
+django-secure
+django-vanilla-views
+fabric
+gevent
+importanize
+markdown
+psycopg2
+six
+Werkzeug
+-e git+http://github.com/miki725/django-auxilium@develop#egg=django_auxilium
+-e git+http://github.com/miki725/django-pipeline@master#egg=django_pipeline

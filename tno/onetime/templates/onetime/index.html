@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load angular %}
+{% load compressed %}
+
+{% block title %}One Time Secret | {{ block.super }}{% endblock %}
+
+{% block ngapp %}ng-app="TrustNoOneApp"{% endblock %}
+
+{% block pre_head_styles %}
+    {% compressed_css 'onetime' %}
+{% endblock pre_head_styles %}
+{% block pre_footer_scripts %}
+{% endblock pre_footer_scripts %}
+{% block footer_scripts %}
+    {% angular_template 'onetime/partials/message-create.html' '/message-create.html' %}
+    {% angular_template 'onetime/partials/message-created.html' '/message-created.html' %}
+    {% angular_template 'onetime/partials/faq.html' '/faq.html' %}
+    {% compressed_js 'onetime' %}
+    <script>
+        INDEX_URL = '{{ request.scheme }}://{{ request.get_host }}{% url 'onetime:index' %}';
+    </script>
+{% endblock %}
+
+{% block pre_container %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-push-1 ">
+                {% include 'onetime/includes/header.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock pre_container %}
+
+{% block container %}
+    <base href="{% url 'onetime:index' %}">
+    <div class="row">
+        <div class="col-md-10 col-md-push-1">
+            <div class="main">
+                <div data-ng-view></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block post_container %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-push-1">
+                {% include 'onetime/includes/footer.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

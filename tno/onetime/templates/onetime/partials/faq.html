@@ -1,0 +1,198 @@
+{% load static %}
+
+<h1>FAQ</h1>
+
+<ul class="faq">
+
+    <li>
+        <b>What is TNO?</b><br>
+        TNO stands for
+        <a href="http://en.wikipedia.org/wiki/Trust_no_one_(internet_security)"
+           target="_blank">
+            Trust No One
+        </a>
+    </li>
+
+    <li>
+        <b>Why TNO.io?</b><br>
+        Lack of web tools using TNO inspired the creation of TNO.io. TNO
+        is a
+        cryptographic practice where information is first encrypted and
+        only then
+        sent to the server for storage. By doing that, server does not
+        technical
+        capability to decrypt the data. As a result, the data is safe from
+        prying
+        eyes or 3 letter agencies...
+    </li>
+
+    <li>
+        <b>How long is the information kept?</b><br>
+        TNO.io deletes all messages after 7 days of their creation. Also
+        as the
+        name "one time secret" implies, accessing the message deletes the
+        message.
+        the password to view the message is guessed incorrectly.
+    </li>
+
+    <li>
+        <b>Messages are completely deleted?</b><br>
+        Yes. TNO.io deletes everything from the database related to a
+        message.
+        Please note this does not flush the nginx logs. As a consequence,
+        some
+        access logs might contain references to messages via their UUIDs.
+    </li>
+
+    <li>
+        <b>Can server decrypt my information?</b><br>
+        No. Period.
+    </li>
+
+    <li>
+        <b>How is it possible server can't decrypt information?</b><br>
+        Cryptography, and its awesome. The essence of TNO is that the
+        "client"
+        encrypts the messages and only then sends ciphertext to the server
+        for
+        storage. This means that the plaintext information never leaves
+        the
+        "client" (e.g. browser). Also, since the server never gets the
+        encryption
+        key, it cannot decrypt the information.
+    </li>
+
+    <li>
+        <b>Is TNO.io open-source?</b><br>
+        Yes. I believe users should have the right to verify the claims of
+        any
+        service and that is what open-source allows. Also, this allows the
+        cryptography community to inspect the crypto use since "the devil
+        is in
+        the details."
+    </li>
+
+    <li>
+        <b>What kind of cryptography TNO.io uses?</b><br>
+        Here are the cryptography primitives used:
+
+        <ul>
+            <li>AES (Advanced Encryption Standard) cipher</li>
+            <li>GCM cipher block mode</li>
+            <li>PBKDF2 as key-derivation function compute encryption key
+            </li>
+        </ul>
+    </li>
+
+    <li>
+        <b>I am a nerd! What is the encryption scheme?</b><br>
+        You ask and you will receive:
+
+        <ol>
+            <li>
+                Browsers are not famous for their random entropy sources.
+                To cope with that, the "client" requests the server for some
+                extra randomness entropy (to be specific 80 bytes or 640
+                bits).
+            </li>
+            <li>
+                Client generates 640 bytes (or 640 bits) of its own
+                entropy.
+            </li>
+            <li>
+                Client <code>XOR</code>s server and client entropy to
+                increase randomness sample quality.
+            </li>
+            <li>
+                The randomness sample generates the following variables:
+
+                <ul>
+                    <li>
+                        <code>IV</code> (Initialization vector) - 32 bytes
+                        (256 bits)
+                    </li>
+                    <li>
+                        <code>SALT</code> to salt user password - 32 bytes
+                        (256 bits)
+                    </li>
+                    <li>
+                        <code>ADATA</code> (associated data) - 16 bytes
+                        (128 bits). <code>AES-GCM</code> will use this
+                        during decryption for message authentication
+                        instead of <code>HMAC</code>. This is taking
+                        advantage of <code>GCM</code>'s feature to be able
+                        to encrypt and authenticate a message in single
+                        algorithm.
+
+                    </li>
+                </ul>
+            </li>
+            <li>
+                "Client" calculates the <code>AES</code> <code>KEY</code>
+                by using <code>PBKDF2</code> function with
+                <codeZ>pass</codeZ>
+                (user-supplied password). Please note that the password
+                should be of good quality so no "monkey"s.
+                <code>PBKDF2</code> uses <code>HMAC SHA256</code> with
+                30000 iterations. We chose 30000 iterations because it
+                seems to provide excellent security with reasonable
+                performance. Also we chose <code>PBKDF2</code> because it
+                has much better performance on mobile devices unlike
+                <code>scrypt</code>. Although we might switch to <code>scrypt</code>
+                in the future as mobile performance increases.
+            </li>
+            <li>
+                Client encrypts secret message plaintext by using:
+                <code>AES256-GCM(message, IV, KEY, ADATA)</code>.
+                That in turn produces <code>ciphertext</code>
+                and <code>tag</code>. <code>ciphertext</code> is the
+                encrypted secret message and the <code>tag</code> is the
+                <code>GCM</code> message digest. Since
+                the server does not store the password, the "client" will
+                use the <code>tag</code> during decryption to verify the
+                password.
+            </li>
+            <li>
+                Finally, the "client" only sends the following information
+                to the server. Please note that the <code>pass</code> is
+                not sent to the server. As a result, the server has no
+                capability to decrypt the message since password is vital
+                to compute the encryption key. In fact, the only way
+                server can get plaintext is by doing brute-force attack.
+                That is computationally expensive though because the
+                "client" enforces good passwords quality. So no "monkey"s
+                as passwords...
+                <ul>
+                    <li><code>IV</code></li>
+                    <li><code>SALT</code></li>
+                    <li><code>ADATA</code></li>
+                    <li><code>tag</code></li>
+                    <li><code>ciphertext</code></li>
+                </ul>
+            </li>
+            <li>
+                When the "client" decrypt message back, it first retrieves
+                stored information from the server. Then it asks for the
+                user password used to encrypt message. Finally it follows
+                the same steps to derive the encryption <code>KEY</code>
+                and tries to decrypt message. During decryption, it uses
+                <code>tag</code> to verify the validity of the password.
+                That is because having invalid tag will cause decryption
+                to fail.
+            </li>
+        </ol>
+
+        <p>Here is the graphical representation of the above
+            description:</p>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <img class="encrypt" src="{% static 'onetime/graphics/encrypt.svg' %}">
+            </div>
+            <div class="col-sm-6">
+                <img class="decrypt" src="{% static 'onetime/graphics/decrypt.svg' %}">
+            </div>
+        </div>
+    </li>
+
+</ul>

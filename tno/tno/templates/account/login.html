@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load compressed %}
+
+{% block title %}Login{% endblock %}
+
+{% block head_styles %}
+    {% compressed_css 'login' %}
+{% endblock %}
+
+{% block container %}
+
+    <form class="form-login" method="post" action="">
+        <div class="panel {{ form.errors|yesno:'panel-danger,panel-default' }}">
+            <div class="panel-heading">Please sign in</div>
+            <div class="panel-body">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    <p class="text-danger">Wrong username or password</p>
+                {% endif %}
+
+                <input type="text" class="form-control" autofocus
+                       name="{{ form.username.html_name }}"
+                       placeholder="{{ form.username.label }}"
+                       {% if form.username.value %}value="{{ form.username.value }}"{% endif %}>
+                <input type="password" class="form-control"
+                       name="{{ form.password.html_name }}"
+                       placeholder="{{ form.password.label }}"
+                       {% if form.password.value %}value="{{ form.password.value }}"{% endif %}>
+
+                <input type="hidden" name="next" value="{{ next }}"/>
+
+                <button class="btn btn-lg btn-primary btn-block"
+                        value="login" type="submit">
+                    Sign in
+                </button>
+            </div>
+        </div>
+    </form>
+
+{% endblock container %}

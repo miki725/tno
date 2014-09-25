@@ -1,0 +1,52 @@
+@bckg: #444444;
+@bckg2: darken(@bckg, 15%);
+@text-color: #dddddd;
+
+html, body {
+    height: 100%;
+    background: @bckg;
+    background: radial-gradient(ellipse at center, @bckg + rgba(0,0,0,1) 0%, @bckg2 + rgba(0,0,0,1) 100%);
+}
+
+.container {
+    &:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -0.25em;
+    }
+
+    height: 100%;
+    color: @text-color;
+    text-align: center;
+}
+
+.centered {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 30px;
+}
+
+h1 {
+    font-size: 48pt;
+    margin-bottom: 0;
+}
+
+h2 {
+    font-size: 32pt;
+    margin-top: 0;
+    font-weight: normal;
+}
+
+.error_code {
+    font-size: 48pt;
+}
+
+.explanation {
+    font-size: 10pt;
+    vertical-align: top;
+    color: darken(@text-color, 30%);
+    padding-bottom: 1em;
+    margin-top: -2em;
+}

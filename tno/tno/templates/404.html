@@ -1,0 +1,29 @@
+{% extends 'errors.html' %}
+{% load compressed %}
+
+{% block title %}404 Error{% endblock %}
+
+{% block head_styles %}
+    {% compressed_css 'errors' %}
+{% endblock head_styles %}
+
+{% block pre_footer_scripts %}
+{% endblock pre_footer_scripts %}
+
+{% block container %}
+
+    <div class="centered">
+        <h1>Knock Knock</h1>
+
+        <h2>...Who's there?</h2>
+
+        <p class="error_code">404</p>
+
+        <p class="explanation">Page not found</p>
+
+        <p>
+            Now visit the <a href="/">home page</a>
+        </p>
+    </div>
+
+{% endblock container %}

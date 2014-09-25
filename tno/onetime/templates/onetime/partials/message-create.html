@@ -1,0 +1,58 @@
+{% verbatim %}
+<h1>One Time Secret</h1>
+
+<form name="form" data-ng-sub="create_message()">
+    <div class="form-group"
+         data-ng-class="{'has-error': !form.password.$error.isEmpty()}">
+
+        <label for="password">password</label>
+
+        <input type="password"
+               id="password"
+               name="password"
+               placeholder="password"
+               data-ng-model="message.password"
+               data-tno-password-length
+               data-tno-password-lowercase
+               data-tno-password-uppercase
+               data-tno-password-digit>
+
+        <ul class="error"
+            data-ng-hide="form.password.$error|isEmpty">
+            <li data-ng-show="form.password.$error.length">
+                password must be at least 10 characters
+            </li>
+            <li data-ng-show="form.password.$error.lowercase && !form.password.$error.length">
+                password must have at least 1 lowercase character
+            </li>
+            <li data-ng-show="form.password.$error.uppercase && !form.password.$error.length">
+                password must have at least 1 UPPERCASE character
+            </li>
+            <li data-ng-show="form.password.$error.digit && !form.password.$error.length">
+                password must have at least 1 digit
+            </li>
+        </ul>
+
+        <div class="help-text">
+            password must be at least 10 characters,<br>
+            must contain both UPPERCASE and lowercase characters,<br>
+            and must have at least one digit
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="message">secret message</label>
+        <textarea id="message"
+                  placeholder="super secret message here"
+                  data-ng-model="message.message"></textarea>
+    </div>
+
+    <div>
+        <button class="btn btn-info"
+                data-ng-disabled="!are_we_there_yet()"
+                data-ng-click="create_message()">
+            encrypt
+        </button>
+    </div>
+</form>
+{% endverbatim %}

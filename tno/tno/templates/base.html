@@ -1,0 +1,50 @@
+{% load compressed %}
+{% load absolute_static %}
+
+<!DOCTYPE html>
+<html {% block ngapp %}{% endblock %}>
+<head>
+    <title>{% block title %}TNO - Trust-No-One{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    {% block pre_head_styles %}
+        {% compressed_css 'bootstrap' %}
+    {% endblock pre_head_styles %}
+    {% block head_styles %}
+    {% endblock head_styles %}
+
+    {% block head_ie_scripts %}
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            {% compressed_js 'ie' %}
+        <![endif]-->
+    {% endblock head_ie_scripts %}
+    {% block pre_head_scripts %}
+        <script type="application/javascript">
+            {% with analytics='js/analytics.min.js'|absolute_static %}{% ssi analytics %}{% endwith %}
+        </script>
+    {% endblock pre_head_scripts %}
+    {% block head_scripts %}
+    {% endblock %}
+</head>
+<body>
+
+{% block pre_container %}
+{% endblock pre_container %}
+{% block container_wrapper %}
+    <div class="container">
+        {% block container %}
+        {% endblock container %}
+    </div>
+{% endblock container_wrapper %}
+{% block post_container %}
+{% endblock post_container %}
+
+{% block pre_footer_scripts %}
+    {% compressed_js 'bootstrap' %}
+{% endblock pre_footer_scripts %}
+{% block footer_scripts %}
+{% endblock footer_scripts %}
+
+</body>
+</html>
