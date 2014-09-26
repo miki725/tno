@@ -107,7 +107,7 @@ angular.module('TrustNoOneApp')
       this.decrypt = function (variables, password) {
         var key = this.compute_key(password, variables.salt),
             decipher = forge.cipher.createDecipher('AES-GCM', key);
-        //variables.tag[0] = 'a';
+
         decipher.start({
           iv            : variables.iv,
           additionalData: variables.adata,
@@ -116,7 +116,7 @@ angular.module('TrustNoOneApp')
         });
         decipher.update(forge.util.createBuffer(variables.ciphertext));
         var pass = decipher.finish();
-        // pass is false if there was a failure (eg: authentication tag didn't match)
+
         if (pass === false) {
           return null;
         }

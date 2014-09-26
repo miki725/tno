@@ -23,7 +23,7 @@ angular.module('TrustNoOneApp')
         'exists'  : null,
         'uuid'    : $stateParams.uuid,
         '$error'  : {},
-        'password': 'HelloWorld1',
+        'password': undefined,
         'message' : undefined,
         'onetime' : undefined
       };
