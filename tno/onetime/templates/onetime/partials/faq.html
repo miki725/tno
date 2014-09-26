@@ -15,61 +15,71 @@
 
     <li>
         <b>Why TNO.io?</b><br>
-        Lack of web tools using TNO inspired the creation of TNO.io. TNO
-        is a
-        cryptographic practice where information is first encrypted and
-        only then
-        sent to the server for storage. By doing that, server does not
-        technical
-        capability to decrypt the data. As a result, the data is safe from
-        prying
-        eyes or 3 letter agencies...
+        Lack of web tools using TNO inspired the creation of TNO.io.
+        TNO is a cryptographic practice where information is first encrypted
+        and only then sent to the server for storage. By doing that,
+        server does not technical capability to decrypt the data. As a result,
+        the data is safe from prying eyes or 3 letter agencies...
+    </li>
+
+    <li>
+        <b>What services does TNO.io provides?</b><br>
+        Currently we only provide One Time Secret service.
+        However please feel free to create GitHub issues
+        to request new features.
+    </li>
+
+    <li>
+        <b>What is One Time Secret?</b><br>
+        One Time Secret is a secret, when created, can only be read once
+        and then auto-destructs.
+    </li>
+
+    <li>
+        <b>How can I use One Time Secrets?</b><br>
+        One Time Secrets are perfect to send sensitive information,
+        such as passwords, as links in emails. This is a lot safer
+        than including such sensitive information in the email body
+        since email is not always secure. The logic being that even
+        if the email is compromised, no sensitive information will be
+        leaked.
     </li>
 
     <li>
         <b>How long is the information kept?</b><br>
-        TNO.io deletes all messages after 7 days of their creation. Also
-        as the
-        name "one time secret" implies, accessing the message deletes the
-        message.
-        the password to view the message is guessed incorrectly.
+        TNO.io deletes all secrets after 7 days of their creation. Also
+        as the name "one time secret" implies, accessing the message
+        deletes the secret.
     </li>
 
     <li>
-        <b>Messages are completely deleted?</b><br>
+        <b>Secrets are completely deleted?</b><br>
         Yes. TNO.io deletes everything from the database related to a
-        message.
-        Please note this does not flush the nginx logs. As a consequence,
-        some
-        access logs might contain references to messages via their UUIDs.
+        secret. Please note this does not flush the secrer (nginx) logs.
+        As a consequence, some access logs might contain references to
+        messages via their UUIDs.
     </li>
 
     <li>
         <b>Can server decrypt my information?</b><br>
-        No. Period.
+        No. Period. Not in this or any other parallel universe.
     </li>
 
     <li>
         <b>How is it possible server can't decrypt information?</b><br>
-        Cryptography, and its awesome. The essence of TNO is that the
-        "client"
-        encrypts the messages and only then sends ciphertext to the server
-        for
-        storage. This means that the plaintext information never leaves
-        the
-        "client" (e.g. browser). Also, since the server never gets the
-        encryption
-        key, it cannot decrypt the information.
+        Cryptography, which is awesome. The essence of TNO is that the
+        "client" encrypts the messages and only then sends ciphertext
+        to the server for storage. This means that the plaintext information
+        never leaves the "client" (e.g. browser). Also, since the server
+        never gets the encryption key, it cannot decrypt the information.
     </li>
 
     <li>
         <b>Is TNO.io open-source?</b><br>
         Yes. I believe users should have the right to verify the claims of
-        any
-        service and that is what open-source allows. Also, this allows the
+        any service and that is what open-source allows. Also, this allows the
         cryptography community to inspect the crypto use since "the devil
-        is in
-        the details."
+        is in the details."
     </li>
 
     <li>
