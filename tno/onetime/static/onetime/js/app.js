@@ -25,6 +25,11 @@ var TrustNoOneApp = angular.module('TrustNoOneApp', [
           templateUrl: '/message-created.html',
           controller : 'MessageCreatedController'
         })
+        .state('view', {
+          url        : '/read/{uuid:[a-f0-9]{32}}/',
+          templateUrl: '/message.html',
+          controller : 'MessageController'
+        })
         .state('faq', {
           url        : '/faq/',
           templateUrl: '/faq.html'

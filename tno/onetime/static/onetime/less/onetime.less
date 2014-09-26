@@ -10,6 +10,7 @@
 @import "/static/lib/bootstrap/less/type.less";
 @import "/static/lib/bootstrap/less/grid.less";
 @import "/static/lib/bootstrap/less/utilities.less";
+@import "/static/lib/bootstrap/less/responsive-utilities.less";
 @import url(http://fonts.googleapis.com/css?family=Roboto:100,300);
 
 body, html {
@@ -200,6 +201,20 @@ input, textarea {
         background: #6886b6;
         color: #4e6f9c;
     }
+    &:not([disabled]):hover {
+        background: lighten(#056ab6, 5%);
+    }
+}
+
+.btn-success {
+    background: #258338;
+    &[disabled] {
+        background: #428958;
+        color: #31714b;
+    }
+    &:not([disabled]):hover {
+        background: lighten(#258338, 5%);
+    }
 }
 
 .faq {
@@ -232,4 +247,10 @@ h1 {
 
 ul, ol {
     margin-bottom: 25px !important;
+}
+
+.well {
+    padding: 15px;
+    border-radius: 3px;
+    background: lighten(#454545, 10%);
 }

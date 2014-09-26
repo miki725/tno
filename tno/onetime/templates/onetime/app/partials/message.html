@@ -1,0 +1,68 @@
+{% verbatim %}
+<h1>One Time Secret</h1>
+
+<div data-ng-show="looking">
+    <p>Please give us a moment...</p>
+</div>
+
+<div data-ng-hide="message.exists || looking">
+    <h2>Not Found</h2>
+
+    <p>
+        Sorry however it seems that the message you requested having
+        <code>UUID: {{ message.uuid }}</code> does not exist.
+        Possible reasons:
+    </p>
+
+    <ul>
+        <li>
+            Secret already viewed hence already deleted
+        </li>
+        <li>
+            Secret has already expired. We only keep secrets for 7 days.
+        </li>
+        <li>
+            Invalid secret <code>UUID</code>. Please check your URL.
+        </li>
+    </ul>
+</div>
+
+<div data-ng-show="message.exists && !message.message">
+    <p>
+        Hi there. Seems that you want to view some secrets!
+        Enter password below used when creating secret message
+        to view your secret.
+    </p>
+
+    <p class="well">
+        Please do not refresh this page. Your secret has
+        already been deleted. By refreshing the page, you will
+        lose your secret.
+    </p>
+
+    <div data-ng-show="message.$error.password">Incorrect password</div>
+
+    <form name="form" data-ng-submit="view_message()">
+        <div data-ng-include="'/includes/password.html'"></div>
+
+        <div>
+            <button class="btn btn-success"
+                    data-ng-disabled="!are_we_there_yet()"
+                    data-ng-click="view_message()">
+                decrypt
+            </button>
+        </div>
+    </form>
+</div>
+
+<div data-ng-show="message.message">
+    <p>You have successfully decrypted your secret message:</p>
+
+    <div>
+        <textarea data-select-on-click
+                  data-tno-text-height
+                  readonly
+                  id="message">{{ message.message }}</textarea>
+    </div>
+</div>
+{% endverbatim %}
