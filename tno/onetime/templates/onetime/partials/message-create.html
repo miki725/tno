@@ -23,21 +23,16 @@
                 password must be at least 10 characters
             </li>
             <li data-ng-show="form.password.$error.lowercase && !form.password.$error.length">
-                password must have at least 1 lowercase character
+                password must have at least 1 lowercase character (a-z)
             </li>
             <li data-ng-show="form.password.$error.uppercase && !form.password.$error.length">
-                password must have at least 1 UPPERCASE character
+                password must have at least 1 UPPERCASE character (A-Z)
             </li>
             <li data-ng-show="form.password.$error.digit && !form.password.$error.length">
-                password must have at least 1 digit
+                password must have at least 1 digit (0-9)
             </li>
         </ul>
 
-        <div class="help-text">
-            password must be at least 10 characters,<br>
-            must contain both UPPERCASE and lowercase characters,<br>
-            and must have at least one digit
-        </div>
     </div>
 
     <div class="form-group">

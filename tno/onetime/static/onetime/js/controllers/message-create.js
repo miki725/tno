@@ -17,8 +17,8 @@ angular.module('TrustNoOneApp')
 
       $scope.encrypting = false;
       $scope.message = {
-        'password': 'HelloWorld1',
-        'message' : 'hello world'
+        'password': undefined,
+        'message' : undefined
       };
       $scope.uuid = null;
 

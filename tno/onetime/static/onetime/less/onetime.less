@@ -38,6 +38,7 @@ header {
     margin: 50px 0;
     position: relative;
     font-size: 24pt;
+    z-index: 1000;
     .logo {
         box-shadow: 2.5px 4.33px 14px 0px rgba(0, 0, 0, 0.3);
         float: left;
@@ -46,13 +47,15 @@ header {
             padding: 8px 18px;
             float: left;
         }
+        a:hover {
+            text-decoration: none;
+        }
         .brand {
             border-radius: 3px 0 0 3px;
             background: #ae5412;
             color: #c0c0c0 !important;
         }
         .brand:hover {
-            text-decoration: none;
             background: lighten(#ae5412, 5%);
         }
         .section {
@@ -100,6 +103,10 @@ header {
             }
         }
     }
+}
+
+#fork-github {
+    z-index: 10;
 }
 
 #message {
