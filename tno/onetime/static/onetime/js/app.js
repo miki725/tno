@@ -2,27 +2,33 @@
 
 var TrustNoOneApp = angular.module('TrustNoOneApp', [
   'ngResource',
-  'ngRoute'
+  'ui.router'
 ])
   .config([
     '$locationProvider',
-    '$routeProvider',
+    '$stateProvider',
+    '$urlRouterProvider',
     function ($locationProvider,
-              $routeProvider) {
+              $stateProvider,
+              $urlRouterProvider) {
 
-      $routeProvider
-        .when('/new/', {
+      $urlRouterProvider.otherwise('/new/');
+
+      $stateProvider
+        .state('new', {
+          url        : '/new/',
           templateUrl: '/message-create.html',
           controller : 'MessageCreateController'
         })
-        .when('/thanks/', {
+        .state('created', {
+          url        : '/thanks/',
           templateUrl: '/message-created.html',
           controller : 'MessageCreatedController'
         })
-        .when('/faq/', {
+        .state('faq', {
+          url        : '/faq/',
           templateUrl: '/faq.html'
-        })
-        .otherwise('/faq/');
+        });
 
       $locationProvider.html5Mode(true);
     }])

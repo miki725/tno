@@ -7,13 +7,13 @@ angular.module('TrustNoOneApp')
     'TNOCrypto',
     'TNOState',
     '$log',
-    '$location',
+    '$state',
     function ($scope,
               OTSecretService,
               TNOCrypto,
               TNOState,
               $log,
-              $location) {
+              $state) {
 
       $scope.encrypting = false;
       $scope.message = {
@@ -52,7 +52,7 @@ angular.module('TrustNoOneApp')
             $scope.message.message = undefined;
             $scope.message.password = undefined;
             $scope.encrypting = false;
-            $location.path('/thanks/');
+            $state.go('created');
           });
       };
     }

@@ -49,7 +49,7 @@ PIPELINE_JS = {
         'source_filenames': [
             'lib/angular/angular.min.js',
             'lib/angular/angular-resource.min.js',
-            'lib/angular/angular-route.min.js',
+            'lib/angular/angular-ui-router.min.js',
             'onetime/js/app.js',
             'onetime/js/controllers/message-create.js',
             'onetime/js/controllers/message-created.js',
