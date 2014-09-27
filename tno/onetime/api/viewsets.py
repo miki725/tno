@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ViewSet
 
 from ..models import OTSecret
+from ..utils import get_entropy
 from .serializers import OTSecretSerializer
 
 
@@ -24,8 +25,7 @@ class EntropyViewSet(ViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         length = min(int(kwargs['bytes']), 1024)
-        with open('/dev/random', 'rb') as fid:
-            entropy = fid.read(length)
+        entropy = get_entropy(length)
         data = {
             'entropy': base64.b64encode(entropy),
             'format': 'base64',

@@ -2,8 +2,6 @@
 from __future__ import print_function, unicode_literals
 from base64 import b64decode, b64encode
 
-from dateutil.relativedelta import relativedelta
-from django.utils.timezone import now
 from rest_framework import serializers
 
 from ..models import OTSecret
@@ -131,6 +129,4 @@ class OTSecretSerializer(serializers.ModelSerializer):
         )
 
     def save_object(self, obj, **kwargs):
-        if not obj.pk:
-            obj.expires = now() + relativedelta(days=7)
         return super(OTSecretSerializer, self).save_object(obj, **kwargs)
