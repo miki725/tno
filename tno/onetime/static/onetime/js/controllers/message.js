@@ -48,7 +48,6 @@ angular.module('TrustNoOneApp')
       };
 
       var _decrypt_message = function () {
-        $log.log('decrypting using ' + $scope.message.password);
         return TNOCrypto.decrypt(
           TNOCrypto.decode({
             'salt'      : $scope.message.onetime.salt,
@@ -84,8 +83,8 @@ angular.module('TrustNoOneApp')
             $scope.message.message = plaintext;
             $scope.message.$error.password = undefined;
           }, function () {
-            $scope.message.$error.password = true;
-            $scope.password = undefined;
+            $scope.form.password.$error.invalid = true;
+            $scope.message.password = undefined;
           })
           .finally(function () {
             $scope.decrypting = false;
