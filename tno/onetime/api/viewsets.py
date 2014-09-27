@@ -1,6 +1,5 @@
 from __future__ import print_function, unicode_literals
 import base64
-import os
 
 from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
@@ -25,7 +24,8 @@ class EntropyViewSet(ViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         length = min(int(kwargs['bytes']), 1024)
-        entropy = os.urandom(length)
+        with open('/dev/random', 'rb') as fid:
+            entropy = fid.read(length)
         data = {
             'entropy': base64.b64encode(entropy),
             'format': 'base64',
