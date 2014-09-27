@@ -2,103 +2,103 @@
 
 <h1>FAQ</h1>
 
-<ul class="faq">
+<dl class="faq">
 
-    <li>
-        <b>What is TNO?</b><br>
+    <dt>What is TNO?</dt>
+    <dd>
         TNO stands for
         <a href="http://en.wikipedia.org/wiki/Trust_no_one_(internet_security)"
            target="_blank">
             Trust No One
         </a>
-    </li>
+    </dd>
 
-    <li>
-        <b>Why TNO.io?</b><br>
+    <dt>Why TNO.io?</dt>
+    <dd>
         Lack of web tools using TNO inspired the creation of TNO.io.
         TNO is a cryptographic practice where information is first encrypted
         and only then sent to the server for storage. By doing that,
         server does not technical capability to decrypt the data. As a result,
         the data is safe from prying eyes or 3 letter agencies...
-    </li>
+    </dd>
 
-    <li>
-        <b>What services does TNO.io provides?</b><br>
+    <dt>What services does TNO.io provides?</dt>
+    <dd>
         Currently we only provide One Time Secret service.
         However please feel free to create GitHub issues
         to request new features.
-    </li>
+    </dd>
 
-    <li>
-        <b>What is One Time Secret?</b><br>
+    <dt>What is One Time Secret?</dt>
+    <dd>
         One Time Secret is a secret, when created, can only be read once
         and then auto-destructs.
-    </li>
+    </dd>
 
-    <li>
-        <b>How can I use One Time Secrets?</b><br>
+    <dt>How can I use One Time Secrets?</dt>
+    <dd>
         One Time Secrets are perfect to send sensitive information,
         such as passwords, as links in emails. This is a lot safer
         than including such sensitive information in the email body
         since email is not always secure. The logic being that even
         if the email is compromised, no sensitive information will be
         leaked.
-    </li>
+    </dd>
 
-    <li>
-        <b>How long is the information kept?</b><br>
+    <dt>How long is the information kept?</dt>
+    <dd>
         TNO.io deletes all secrets after 7 days of their creation. Also
         as the name "one time secret" implies, accessing the message
         deletes the secret.
-    </li>
+    </dd>
 
-    <li>
-        <b>Secrets are completely deleted?</b><br>
+    <dt>Secrets are completely deleted?</dt>
+    <dd>
         Yes. TNO.io deletes everything from the database related to a
         secret. Please note this does not flush the secrer (nginx) logs.
         As a consequence, some access logs might contain references to
         messages via their UUIDs.
-    </li>
+    </dd>
 
-    <li>
-        <b>Can server decrypt my information?</b><br>
+    <dt>Can server decrypt my information?</dt>
+    <dd>
         No. Period. Not in this or any other parallel universe.
-    </li>
+    </dd>
 
-    <li>
-        <b>How is it possible server can't decrypt information?</b><br>
+    <dt>How is it possible server can't decrypt information?</dt>
+    <dd>
         Cryptography, which is awesome. The essence of TNO is that the
         "client" encrypts the messages and only then sends ciphertext
         to the server for storage. This means that the plaintext information
         never leaves the "client" (e.g. browser). Also, since the server
         never gets the encryption key, it cannot decrypt the information.
-    </li>
+    </dd>
 
-    <li>
-        <b>Is TNO.io open-source?</b><br>
+    <dt>Is TNO.io open-source?</dt>
+    <dd>
         Yes. I believe users should have the right to verify the claims of
         any service and that is what open-source allows. Also, this allows the
         cryptography community to inspect the crypto use since "the devil
         is in the details."
-    </li>
+    </dd>
 
-    <li>
-        <b>What kind of cryptography TNO.io uses?</b><br>
+    <dt>What kind of cryptography TNO.io uses?</dt>
+    <dd>
         Here are the cryptography primitives used:
 
-        <ul>
+        <ul class="spaceless">
             <li>AES (Advanced Encryption Standard) cipher</li>
             <li>GCM cipher block mode</li>
             <li>PBKDF2 as key-derivation function compute encryption key
             </li>
         </ul>
-    </li>
+    </dd>
 
-    <li>
-        <b>I am a nerd! What is the encryption scheme?</b><br>
+    <dt>I am a nerd! What is the encryption scheme?</dt>
+    <dd>
         You ask and you will receive:
 
-        <ol>
+        <ol class="spaceless">
             <li>
                 Browsers are not famous for their random entropy sources.
                 To cope with that, the "client" requests the server for some
@@ -116,7 +116,7 @@
             <li>
                 The randomness sample generates the following variables:
 
-                <ul>
+                <ul class="spaceless">
                     <li>
                         <code>IV</code> (Initialization vector) - 32 bytes
                         (256 bits)
@@ -172,7 +172,7 @@
                 That is computationally expensive though because the
                 "client" enforces good passwords quality. So no "monkey"s
                 as passwords...
-                <ul>
+                <ul class="spaceless">
                     <li><code>IV</code></li>
                     <li><code>SALT</code></li>
                     <li><code>ADATA</code></li>
@@ -203,13 +203,13 @@
                 <img class="decrypt" src="{% static 'onetime/graphics/decrypt.svg' %}">
             </div>
         </div>
-    </li>
+    </dd>
 
-    <li>
-        <b>How is entropy on the server generated?</b><br>
+    <dt>How server generated its entropy?</dt>
+    <dd>
         We are using <code>/dev/random</code> Linux preudorandom number generator.
-        It a blocking device unlike <code>/dev/urandom</code> which ensures
-        that it always generates as good as possible randomness.
-    </li>
+        It is a blocking device unlike <code>/dev/urandom</code> which ensures
+        that it always generates good randomness.
+    </dd>
 
-</ul>
+</dl>
