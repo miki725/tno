@@ -205,4 +205,11 @@
         </div>
     </li>
 
+    <li>
+        <b>How is entropy on the server generated?</b><br>
+        We are using <code>/dev/random</code> Linux preudorandom number generator.
+        It a blocking device unlike <code>/dev/urandom</code> which ensures
+        that it always generates as good as possible randomness.
+    </li>
+
 </ul>
