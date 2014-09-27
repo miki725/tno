@@ -72,7 +72,7 @@ angular.module('TrustNoOneApp')
 
       this.compute_key = function (password, salt) {
         return forge.pkcs5.pbkdf2(
-          forge.util.encode64(password),
+          forge.util.encodeUtf8(password),
           salt,
           this.pbkdf2_iterations,
           this.key_length,
@@ -89,7 +89,9 @@ angular.module('TrustNoOneApp')
           additionalData: variables.adata,
           tagLength     : this.adata_length * 8
         });
-        cipher.update(forge.util.createBuffer(plaintext));
+        cipher.update(new forge.util.ByteBuffer(forge.util.encodeUtf8(
+          plaintext
+        )));
         cipher.finish();
 
         var encrypted = cipher.output.data,
@@ -114,14 +116,16 @@ angular.module('TrustNoOneApp')
           tagLength     : this.adata_length * 8,
           tag           : variables.tag
         });
-        decipher.update(forge.util.createBuffer(variables.ciphertext));
+        decipher.update(new forge.util.ByteBuffer(
+          variables.ciphertext
+        ));
         var pass = decipher.finish();
 
         if (pass === false) {
           return null;
         }
 
-        return decipher.output.toString();
+        return forge.util.decodeUtf8(decipher.output.data);
       };
 
       this.encode = function (data) {
