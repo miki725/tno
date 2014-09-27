@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Checklist for production-ready settings:
 https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
