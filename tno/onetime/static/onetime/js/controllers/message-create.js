@@ -8,12 +8,14 @@ angular.module('TrustNoOneApp')
     'TNOState',
     '$log',
     '$state',
+    '$timeout',
     function ($scope,
               OTSecretService,
               TNOCrypto,
               TNOState,
               $log,
-              $state) {
+              $state,
+              $timeout) {
 
       $scope.encrypting = false;
       $scope.message = {
@@ -21,6 +23,9 @@ angular.module('TrustNoOneApp')
         'message' : undefined
       };
       $scope.uuid = null;
+
+      // useful for debugging
+      var delay = 0;
 
       $scope.are_we_there_yet = function () {
         return angular.isDefined($scope.message.message)
@@ -49,10 +54,12 @@ angular.module('TrustNoOneApp')
             TNOState.state.created = data;
           })
           .finally(function () {
-            $scope.message.message = undefined;
-            $scope.message.password = undefined;
-            $scope.encrypting = false;
-            $state.go('created');
+            $timeout(function () {
+              $scope.message.message = undefined;
+              $scope.message.password = undefined;
+              $scope.encrypting = false;
+              $state.go('created');
+            }, delay);
           });
       };
     }

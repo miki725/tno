@@ -1,8 +1,8 @@
 {% verbatim %}
 <h1>One Time Secret</h1>
 
-<div data-ng-show="looking">
-    <p>Please give us a moment...</p>
+<div data-ng-show="looking || decrypting">
+    <div data-ng-include="'/includes/loading.html'"></div>
 </div>
 
 <div data-ng-hide="message.exists || looking">

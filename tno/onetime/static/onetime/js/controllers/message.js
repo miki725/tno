@@ -28,6 +28,9 @@ angular.module('TrustNoOneApp')
         'onetime' : undefined
       };
 
+      // useful for debugging
+      var delay = 0;
+
       $timeout(function () {
         OTSecretService
           .get({'uuid': $scope.message.uuid}).$promise
@@ -39,7 +42,7 @@ angular.module('TrustNoOneApp')
           }).finally(function () {
             $scope.looking = false;
           });
-      });
+      }, delay);
 
       $scope.are_we_there_yet = function () {
         return angular.isDefined($scope.message.password)
@@ -71,11 +74,13 @@ angular.module('TrustNoOneApp')
 
         $timeout(function () {
           var decrypted = _decrypt_message();
-          if (decrypted === null) {
-            deferred.reject();
-          } else {
-            deferred.resolve(decrypted);
-          }
+          $timeout(function () {
+            if (decrypted === null) {
+              deferred.reject();
+            } else {
+              deferred.resolve(decrypted);
+            }
+          }, delay)
         });
 
         return deferred.promise
