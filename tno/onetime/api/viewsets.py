@@ -136,7 +136,7 @@ class OneTimeSecretViewSet(CreateModelMixin,
         obj = super(OneTimeSecretViewSet, self).get_object(queryset)
         pk = obj.pk
         # delete object when being accessed
-        # obj.delete()
+        obj.delete()
         # restore pk in case will be used somewhere
         obj.pk = pk
         return obj
