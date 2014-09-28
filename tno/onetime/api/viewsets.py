@@ -20,7 +20,7 @@ class EntropyViewSet(ViewSet):
     Currently the random data is encoded using standard "base64"
     encoding (not url-safe) for better support.
     """
-    http_method_names = ('get',)
+    http_method_names = ('get', 'head',)
     lookup_field = 'bytes'
     lookup_value_regex = r'[\d]+'
 

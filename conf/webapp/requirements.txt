@@ -6,10 +6,13 @@ django-crispy-forms
 django-extensions
 django-secure
 django-vanilla-views
+djangorestframework
 fabric
 gevent
+gunicorn
 importanize
 markdown
+newrelic
 psycopg2
 six
 Werkzeug
