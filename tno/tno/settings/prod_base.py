@@ -21,6 +21,7 @@ ADMINS = (
 
 ALLOWED_HOSTS = [
     'tno.io',
+    'www.tno.io',
     'localhost',
     '127.0.0.1',
 ]
@@ -47,6 +48,11 @@ MIDDLEWARE_CLASSES = (
     )
     + MIDDLEWARE_CLASSES
 )
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'data', 'static')
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'data', 'media')
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True

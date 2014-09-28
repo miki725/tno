@@ -11,7 +11,11 @@ import os
 from .conf.pipeline import *  # noqa
 
 
+# where manage.py is located
 PROJECT_PATH = os.path.abspath(os.path.join(__file__, '..', '..', '..'))
+# project root folder
+PROJECT_ROOT = os.path.dirname(PROJECT_PATH)
+# project name - name of PROJECT_PATH inside PROJECT_ROOT
 PROJECT_NAME = os.path.basename(PROJECT_PATH)
 
 INSTALLED_APPS = (
