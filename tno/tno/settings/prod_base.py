@@ -56,12 +56,24 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-SECURE_HSTS_SECONDS = 31536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_SECONDS = None  # added by nginx
+SECURE_HSTS_INCLUDE_SUBDOMAINS = None  # added by nginx
 SECURE_FRAME_DENY = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_SSL_REDIRECT = True
+
+SECURE_CHECKS = [
+    "djangosecure.check.csrf.check_csrf_middleware",
+    "djangosecure.check.sessions.check_session_cookie_secure",
+    "djangosecure.check.sessions.check_session_cookie_httponly",
+    "djangosecure.check.djangosecure.check_security_middleware",
+    # "djangosecure.check.djangosecure.check_sts",
+    "djangosecure.check.djangosecure.check_frame_deny",
+    "djangosecure.check.djangosecure.check_content_type_nosniff",
+    "djangosecure.check.djangosecure.check_xss_filter",
+    "djangosecure.check.djangosecure.check_ssl_redirect",
+]
 
 EMAIL_SUBJECT_PREFIX = '[Django tno] '
 EMAIL_HOST = 'smtp.gmail.com'
