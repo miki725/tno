@@ -10,6 +10,6 @@ router = DefaultRouter(trailing_slash=True)
 router.include_root_view = False
 
 router.register('entropy', EntropyViewSet, 'entropy')
-router.register('one-time-secret', OneTimeSecretViewSet, 'one-time-secret')
+router.register('one-time-secrets', OneTimeSecretViewSet, 'one-time-secret')
 
 urlpatterns = router.urls
