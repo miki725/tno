@@ -21,7 +21,14 @@ ADMINS = (
 
 ALLOWED_HOSTS = [
     'tno.io',
+    'localhost',
+    '127.0.0.1',
 ]
+
+if os.environ.get('HOST_IP', None):
+    ALLOWED_HOSTS += [
+        os.environ['HOST_IP'],
+    ]
 
 DATABASES = {
     'default': {
@@ -29,7 +36,7 @@ DATABASES = {
         'NAME': '',
         'USER': '',
         'PASSWORD': '',
-        'HOST': 'localhost',
+        'HOST': 'postgres.tno.docker',
         'PORT': '5432',
     }
 }
