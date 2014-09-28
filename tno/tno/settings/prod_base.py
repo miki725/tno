@@ -34,8 +34,8 @@ if os.environ.get('HOST_IP', None):
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '',
-        'USER': '',
+        'NAME': 'tnodb',
+        'USER': 'tnouser',
         'PASSWORD': '',
         'HOST': 'postgres.tno.docker',
         'PORT': '5432',
