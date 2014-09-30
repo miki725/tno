@@ -64,7 +64,10 @@ PIPELINE_JS = {
             'onetime/js/services/state.js',
             'lib/forge/forge.min.js',
         ],
-        'output_filename': 'onetime/js/onetime.js'
+        'output_filename': 'onetime/js/onetime.js',
+        'extra_context': {
+            'defer': True,
+        }
     },
     'bootstrap': {
         'source_filenames': [
