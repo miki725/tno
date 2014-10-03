@@ -7,9 +7,8 @@ from .viewsets import EntropyViewSet, OneTimeSecretViewSet
 
 
 router = DefaultRouter(trailing_slash=True)
-router.include_root_view = False
 
-router.register('entropy', EntropyViewSet, 'entropy')
-router.register('one-time-secrets', OneTimeSecretViewSet, 'one-time-secret')
+router.register('entropy', EntropyViewSet, 'api-entropy')
+router.register('one-time-secrets', OneTimeSecretViewSet, 'api-one-time-secret')
 
 urlpatterns = router.urls

@@ -9,12 +9,6 @@ from django.core.urlresolvers import reverse_lazy
 from vanilla.views import RedirectView
 
 
-api_urlpatterns = patterns(
-    '',
-
-    url(r'^', include('onetime.api.router', namespace='onetime'))
-)
-
 urlpatterns = patterns(
     '',
 
@@ -23,7 +17,7 @@ urlpatterns = patterns(
                              url=reverse_lazy('onetime:index')),
         name='index'),
 
-    url(r'^api/v1/', include(api_urlpatterns, namespace='api')),
+    url(r'^api/v1/', include('onetime.api.router')),
 
     # login/logout
     url(r'^login/$', login, {'template_name': 'account/login.html'}, name='login'),

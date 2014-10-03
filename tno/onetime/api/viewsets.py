@@ -4,6 +4,8 @@ import base64
 
 from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from rest_framework.status import HTTP_405_METHOD_NOT_ALLOWED
 from rest_framework.viewsets import GenericViewSet, ViewSet
 
 from ..models import OTSecret
@@ -33,6 +35,19 @@ class EntropyViewSet(ViewSet):
             'bytes': length,
         }
         return Response(data)
+
+    def list(self, request, *args, **kwargs):
+        data = {
+            'entropy': reverse(
+                request.resolver_match.url_name.replace('list', 'detail'),
+                kwargs={
+                    'bytes': 123,
+                },
+                request=request,
+                format=kwargs.get('format', None)
+            ).replace('123', ':bytes')
+        }
+        return Response(data, status=HTTP_405_METHOD_NOT_ALLOWED)
 
 
 class OneTimeSecretViewSet(CreateModelMixin,
