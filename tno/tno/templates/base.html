@@ -1,11 +1,13 @@
-{% load compressed %}
 {% load absolute_static %}
+{% load compressed %}
+{% load static %}
 
 <!DOCTYPE html>
 <html {% block ngapp %}{% endblock %}>
 <head>
     <title>{% block title %}TNO - Trust-No-One{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="{% static 'graphics/favicon.png' %}"/>
     <!-- Bootstrap -->
     {% block pre_head_styles %}
         {% compressed_css 'bootstrap' %}
