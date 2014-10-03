@@ -7,5 +7,4 @@ docker run \
     --volumes-from=webapp \
     -e "DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE" \
     miki725/tnowebapp \
-        /webapp/tno/manage.py \
-            clearsessions
+        /webapp/tno/manage.py $1
