@@ -1,11 +1,54 @@
 Trust No One
 ============
 
+* GitHub - https://github.com/miki725/tno
+* Site - https://tno.io
+
+TNO which stands for Trust No One is a project which implements
+a set of web tools all following TNO cryptography principle.
+TNO principle is an application approach where no sensitive
+user information is stored on the server. Instead all information
+is encrypted in the "client" (e.g. web browser) and only the
+ciphertext is sent to the server for storage. As a result,
+since the server does not store the decryption key or any
+information to derive the decryption key, it is unable to
+read the stored data.
+
+This repository contains source code for the https://tno.io site.
+
+Services
+--------
+
+Currently TNO.io provides the following services:
+
+* **One Time Secrets** - A way to share secrets which
+  self-destruct after they are viewed. This is perfect
+  for sending passwords in emails instead of sending
+  actual passwords via inherently insecure medium.
+
+RESTful API
+-----------
+
+APIs are awesome and should be public! TNO.io provides an
+open API which anybody can use to interact with various
+services we provide. In fact, we eat our own dog food and
+use the same APIs to power our site.
+
+Currently the following endpoints are available.
+For each information about each endpoint, you can make
+``OPTIONS`` request to get tons more information.
+
+* ``/api/v1/entropy/:bytes/``
+* ``/api/v1/one-time-secrets/``
+* ``/api/v1/one-time-secrets/:uuid/``
+
+You can also query https://tno.io/api/v1/ to get all endpoints
+as well.
 
 Credits
 -------
 
-* Miroslav Shubernetskiy <miroslav@miki725.com>
+* Miroslav Shubernetskiy - https://github.com/miki725
 
 License
 -------
@@ -13,6 +56,8 @@ License
 ::
 
     The MIT License (MIT)
+
+    Copyright (c) 2014 Miroslav Shubernetskiy
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
