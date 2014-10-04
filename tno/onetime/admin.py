@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals
 
-from django.contrib import admin
+from core.admin import site
 
 from .models import OTSecret
 
 
-admin.site.register(OTSecret)
+site.register(OTSecret)

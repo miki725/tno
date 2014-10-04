@@ -3,10 +3,11 @@ from __future__ import print_function, unicode_literals
 
 from django.conf import settings
 from django.conf.urls import include, patterns, url
-from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from django.core.urlresolvers import reverse_lazy
 from vanilla.views import RedirectView
+
+from core.admin import site
 
 
 urlpatterns = patterns(
@@ -25,7 +26,7 @@ urlpatterns = patterns(
                                'next_page': '/'}, name='logout'),
 
     # admin
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(site.urls)),
 
     url(r'^one-time-secret/', include('onetime.urls', namespace='onetime')),
 )

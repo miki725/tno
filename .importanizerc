@@ -9,8 +9,9 @@
         {
             "type": "packages",
             "packages": [
-                "tno",
-                "onetime"
+                "core",
+                "onetime",
+                "tno"
             ]
         },
         {
