@@ -87,7 +87,7 @@ web:
 
 Blank environment file will have a structure something like:
 
-```
+```ini
 DJANGO_SETTINGS_MODULE=tno.settings.prod
 ALLOWED_HOSTS=
 SECRET_KEY=
