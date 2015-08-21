@@ -45,34 +45,107 @@ For each information about each endpoint, you can make
 You can also query https://tno.io/api/v1/ to get all endpoints
 as well.
 
+Deployment
+----------
+
+For the ease of deployment, TNO is packaged as a Docker container.
+Docker allows to easily deploy the application with minimal setup.
+The packaged ``Dockerfile`` only runs the Django webapp by using
+`gunicorn <http://gunicorn.org/>`_ web server and requires access
+to a PostgreSQL database. Therefore it is recommended to run
+TNO as part of a `docker-compose <https://docs.docker.com/compose/>`_
+application. Example docker-compose application::
+
+    data:
+      image: busybox
+      volumes:
+        - /data
+
+    pgdata:
+      image: miki725/pgdata
+
+    postgres:
+      image: miki725/postgres
+      expose:
+        - 5432
+      volumes_from:
+        - pgdata
+
+    web:
+      image: miki725/tno
+      env_file: ./my.env
+      expose:
+        - 8888
+      ports:
+        - 8888:8888
+      links:
+        - postgres
+      volumes_from:
+        - data
+
+Blank environment file will have a structure something like::
+
+    DJANGO_SETTINGS_MODULE=tno.settings.prod
+    ALLOWED_HOSTS=
+    SECRET_KEY=
+
+    DATABASE_HOST=postgres
+    DATABASE_PORT=5432
+    DATABASE_NAME=
+    DATABASE_USER=
+    DATABASE_PASSWORD=
+
+    EMAIL_HOST=
+    EMAIL_HOST_USER=
+    EMAIL_HOST_PASSWORD=
+
+    NEW_RELIC_ENABLED=true
+    NEW_RELIC_LICENSE_KEY=
+    NEW_RELIC_APP_NAME=TNO
+
+    OPBEAT_ENABLED=true
+    OPBEAT_ORGANIZATION_ID=
+    OPBEAT_APP_ID=
+    OPBEAT_SECRET_TOKEN=
+
+To run the application, ``docker-compose`` can be used::
+
+    $ docker-compose up -d
+
+That however will simply run the application.
+When starting the application for the first time, some setup will be required.
+
+1. Create database for TNO::
+
+    $ docker run -it --rm --link=tno_postgres_1:postgres miki725/postgres psql --host=postgres
+    sql> CREATE ROLE tno WITH
+         NOSUPERUSER
+         NOCREATEDB
+         NOCREATEROLE
+         NOINHERIT
+         LOGIN
+         ENCRYPTED PASSWORD '';
+
+    sql> CREATE DATABASE tno WITH
+         OWNER="tnouser"
+         ENCODING='UTF8';
+
+2. Migrate Django application database to bring the schema up to date with the code::
+
+    $ docker run -it --rm \
+        --env-file=my.env \
+        --link=tno_postgres_1:postgres \
+        tno_web ./manage.py migrate
+
+3. Collect all the static files::
+
+    $ docker run -it --rm \
+        --env-file=my.env \
+        --link=tno_postgres_1:postgres \
+        --volumes-from=tno_data_1 \
+        tnobuild_web ./manage.py collectstatic --noinput
+
 Credits
 -------
 
 * Miroslav Shubernetskiy - https://github.com/miki725
-
-License
--------
-
-::
-
-    The MIT License (MIT)
-
-    Copyright (c) 2014 Miroslav Shubernetskiy
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
