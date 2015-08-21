@@ -2,13 +2,13 @@
 from __future__ import print_function, unicode_literals
 from base64 import b64decode, b64encode
 
-from rest_framework import serializers
+from rest_framework import fields, serializers
 
 from ..models import OTSecret
 from ..utils import len_base64
 
 
-class Base64Field(serializers.RegexField):
+class Base64Field(fields.RegexField):
     """
     Serializer field for validating base64-encoded strings.
     Also accepts a custom ``length`` parameter which can be
@@ -31,27 +31,28 @@ class Base64Field(serializers.RegexField):
 
         super(Base64Field, self).__init__(*args, **kwargs)
 
-    def to_native(self, value):
+    def to_representation(self, value):
         """
         Encode the value as base64 if required
         """
         if value and self.decode:
-            value = b64encode(value)
-        return super(Base64Field, self).to_native(value)
+            value = b64encode(value).decode('ascii')
+        return super(Base64Field, self).to_representation(value)
 
-    def field_from_native(self, data, files, field_name, into):
+    def run_validation(self, data=fields.empty):
         """
-        User ``field_from_native`` instead of ``from_native``
-        because it allows to run validators before
-        data is normalized hence it can be checked that
-        submitted data is indeed base64 by the submitted
-        length and regex.
         """
-        super(Base64Field, self).field_from_native(data, files, field_name, into)
-        value = into.get(self.source or field_name)
-        if value and self.decode:
+        data = super(Base64Field, self).run_validation(data)
+        if data:
+            data = self.validate(data)
+        return data
+
+    def validate(self, value):
+        """
+        """
+        if self.decode:
             value = b64decode(value)
-            into[self.source or field_name] = value
+        return value
 
 
 class OTSecretSerializer(serializers.ModelSerializer):
@@ -127,6 +128,3 @@ class OTSecretSerializer(serializers.ModelSerializer):
             'created',
             'expires',
         )
-
-    def save_object(self, obj, **kwargs):
-        return super(OTSecretSerializer, self).save_object(obj, **kwargs)

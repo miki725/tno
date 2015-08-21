@@ -67,7 +67,7 @@ class OTSecret(models.Model):
 
     def generate_uuid(self, force=False):
         if not self.uuid or force:
-            self.uuid = uuid4().get_hex()
+            self.uuid = uuid4().hex
 
     def save(self, *args, **kwargs):
         if not self.uuid:

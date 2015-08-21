@@ -1,0 +1,7 @@
+-r requirements.txt
+django-extensions
+flake8
+importanize
+ipython
+watchdog
+Werkzeug

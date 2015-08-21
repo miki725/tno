@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load angular %}
-{% load compressed %}
+{% load pipeline %}
 
 {% block title %}One Time Secret | {{ block.super }}{% endblock %}
 
 {% block ngapp %}ng-app="TrustNoOneApp"{% endblock %}
 
 {% block pre_head_styles %}
-    {% compressed_css 'onetime' %}
+    {% stylesheet 'onetime' %}
 {% endblock pre_head_styles %}
 {% block pre_footer_scripts %}
 {% endblock pre_footer_scripts %}
@@ -18,7 +18,7 @@
     {% angular_template 'onetime/app/partials/faq.html' '/faq.html' %}
     {% angular_template 'onetime/app/includes/loading.html' '/includes/loading.html' %}
     {% angular_template 'onetime/app/includes/password.html' '/includes/password.html' %}
-    {% compressed_js 'onetime' %}
+    {% javascript 'onetime' %}
     <script>
         HOST_URL = '{{ request.scheme }}://{{ request.get_host }}';
     </script>

@@ -2,19 +2,21 @@
 from __future__ import print_function, unicode_literals
 
 from django import template
-from django.conf import settings
-from django.template import loader
-from django.utils.safestring import mark_safe
 from django_auxilium.utils.html import simple_minify
+from django.conf import settings
+from django.template import engines
+from django.utils.safestring import mark_safe
 
 
 register = template.Library()
+django_engine = engines['django']
 
-ANGULAR_TEMPLATE = loader.get_template_from_string(
-    '{% include angular_template_name %}')
-ANGULAR_SCRIPT_TEMPLATE = loader.get_template_from_string("""
-<script type="text/ng-template" id="{{ angular_name }}">{{ template }}</script>
-""")
+ANGULAR_TEMPLATE = django_engine.from_string(
+    '{% include angular_template_name %}'
+)
+ANGULAR_SCRIPT_TEMPLATE = django_engine.from_string(
+    '<script type="text/ng-template" id="{{ angular_name }}">{{ template }}</script>'
+)
 
 
 @register.simple_tag(takes_context=True)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals
 
-from .base import *
+from .base import *  # noqa
 
 
 DEBUG = True
@@ -12,6 +12,10 @@ DATABASES = {
         'NAME': 'tno.sqlite',
     }
 }
+
+INSTALLED_APPS += [
+    'django_extensions',
+]
 
 ALLOWED_HOSTS = [
     '*',

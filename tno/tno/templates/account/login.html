@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% load compressed %}
+{% load pipeline %}
 
 {% block title %}Login{% endblock %}
 
 {% block head_styles %}
-    {% compressed_css 'login' %}
+    {% stylesheet 'login' %}
 {% endblock %}
 
 {% block container %}

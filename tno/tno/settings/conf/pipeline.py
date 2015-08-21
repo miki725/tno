@@ -2,7 +2,6 @@
 from __future__ import print_function, unicode_literals
 
 
-# Pipeline
 PIPELINE_COMPILERS = (
     'pipeline.compilers.less.LessCompiler',
 )

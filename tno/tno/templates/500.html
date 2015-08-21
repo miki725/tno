@@ -1,10 +1,10 @@
 {% extends 'errors.html' %}
-{% load compressed %}
+{% load pipeline %}
 
 {% block title %}500 Error{% endblock %}
 
 {% block head_styles %}
-    {% compressed_css 'errors' %}
+    {% stylesheet 'errors' %}
 {% endblock head_styles %}
 
 {% block pre_footer_scripts %}

@@ -1,5 +1,5 @@
 {% load absolute_static %}
-{% load compressed %}
+{% load pipeline %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'graphics/favicon.png' %}"/>
     <!-- Bootstrap -->
     {% block pre_head_styles %}
-        {% compressed_css 'bootstrap' %}
+        {% stylesheet 'bootstrap' %}
     {% endblock pre_head_styles %}
     {% block head_styles %}
     {% endblock head_styles %}
@@ -18,7 +18,7 @@
     {% block head_ie_scripts %}
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
-            {% compressed_js 'ie' %}
+            {% javascript 'ie' %}
         <![endif]-->
     {% endblock head_ie_scripts %}
     {% block pre_head_scripts %}
@@ -43,7 +43,7 @@
 {% endblock post_container %}
 
 {% block pre_footer_scripts %}
-    {% compressed_js 'bootstrap' %}
+    {% javascript 'bootstrap' %}
 {% endblock pre_footer_scripts %}
 {% block footer_scripts %}
 {% endblock footer_scripts %}

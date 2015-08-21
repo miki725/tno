@@ -30,7 +30,7 @@ class EntropyViewSet(ViewSet):
         length = min(int(kwargs['bytes']), 1024)
         entropy = get_entropy(length)
         data = {
-            'entropy': base64.b64encode(entropy),
+            'entropy': base64.b64encode(entropy).decode('ascii'),
             'format': 'base64',
             'bytes': length,
         }
@@ -144,11 +144,11 @@ class OneTimeSecretViewSet(CreateModelMixin,
     # uuid is stored as hex value
     lookup_value_regex = r'[a-f0-9]{32}'
 
-    model = OTSecret
+    queryset = OTSecret.objects.all()
     serializer_class = OTSecretSerializer
 
-    def get_object(self, queryset=None):
-        obj = super(OneTimeSecretViewSet, self).get_object(queryset)
+    def get_object(self):
+        obj = super(OneTimeSecretViewSet, self).get_object()
         pk = obj.pk
         # delete object when being accessed
         obj.delete()
@@ -156,8 +156,8 @@ class OneTimeSecretViewSet(CreateModelMixin,
         obj.pk = pk
         return obj
 
-    def pre_save(self, obj):
-        super(OneTimeSecretViewSet, self).pre_save(obj)
-
+    def perform_create(self, serializer):
+        user = None
         if self.request.user.is_authenticated():
-            obj.user = self.request.user
+            user = self.request.user
+        serializer.save(user=user)
