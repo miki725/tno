@@ -43,8 +43,6 @@ Thumbs.db
 
 # Sensitive files #
 ###################
-prod.py
-newrelic.ini
 *.key
 *.protected
 
