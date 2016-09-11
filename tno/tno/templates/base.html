@@ -22,9 +22,7 @@
         <![endif]-->
     {% endblock head_ie_scripts %}
     {% block pre_head_scripts %}
-        <script type="application/javascript">
-            {% with analytics='js/analytics.min.js'|absolute_static %}{% ssi analytics %}{% endwith %}
-        </script>
+        {% include 'analytics.html' %}
     {% endblock pre_head_scripts %}
     {% block head_scripts %}
     {% endblock %}

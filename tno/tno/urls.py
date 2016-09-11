@@ -2,17 +2,16 @@
 from __future__ import print_function, unicode_literals
 
 from django.conf import settings
-from django.conf.urls import include, patterns, url
+from django.conf.urls import include, url
 from django.contrib.auth.views import login, logout
 from django.core.urlresolvers import reverse_lazy
+from django.views.static import serve
 from vanilla.views import RedirectView
 
 from core.admin import site
 
 
-urlpatterns = patterns(
-    '',
-
+urlpatterns = [
     url(r'^$',
         RedirectView.as_view(permanent=False,
                              url=reverse_lazy('onetime:index')),
@@ -29,12 +28,11 @@ urlpatterns = patterns(
     url(r'^admin/', include(site.urls)),
 
     url(r'^one-time-secret/', include('onetime.urls', namespace='onetime')),
-)
+]
 
 if settings.DEBUG:
-    urlpatterns += patterns(
-        '',
+    urlpatterns += [
         url(r'^{}(?P<path>.*)$'.format(settings.MEDIA_URL[1:]),
-            'django.views.static.serve',
+            serve,
             {'document_root': settings.MEDIA_ROOT}),
-    )
+    ]

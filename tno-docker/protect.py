@@ -10,9 +10,7 @@ import subprocess
 ENV_VAR = 'PROTECTION_PASSWORD'
 PROTECTED = '.protected'
 FILES = (
-    'nginx/ssl/tno.io.private.key{}',
-    '../tno/conf/newrelic.ini{}',
-    '../tno/tno/settings/prod.py{}',
+    'prod.env{}',
 )
 
 parser = argparse.ArgumentParser()
@@ -69,7 +67,7 @@ if __name__ == '__main__':
                 raise IncorrectPassword('Incorrect password')
 
     except Exception as e:
-        parser.error(e.message)
+        parser.error(str(e))
 
     finally:
         del os.environ[ENV_VAR]

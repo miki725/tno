@@ -1,9 +1,10 @@
 cryptography
 dateutils
+django-auxilium
 django-braces
+django-configurations
 django-crispy-forms
 django-pipeline
-django-secure
 django-vanilla-views
 djangorestframework
 gunicorn
@@ -14,4 +15,3 @@ psycopg2
 six
 
 https://github.com/miki725/breach_buster/archive/master.tar.gz
-https://github.com/miki725/django-auxilium/archive/develop.tar.gz

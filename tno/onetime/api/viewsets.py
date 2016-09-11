@@ -144,7 +144,7 @@ class OneTimeSecretViewSet(CreateModelMixin,
     # uuid is stored as hex value
     lookup_value_regex = r'[a-f0-9]{32}'
 
-    queryset = OTSecret.objects.all()
+    queryset = OTSecret.objects.all().active()
     serializer_class = OTSecretSerializer
 
     def get_object(self):

@@ -1,24 +1,33 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals
 
-from .base import *  # noqa
+from .base import Base
 
 
-DEBUG = True
+class Dev(Base):
+    DEBUG = True
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'tno.sqlite',
+    ALLOWED_HOSTS = [
+        '*',
+    ]
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'tno.sqlite',
+        }
     }
-}
 
-INSTALLED_APPS += [
-    'django_extensions',
-]
+    REDIS = {
+        'host': 'localhost',
+        'port': 6379,
+        'db': 0,
+    }
 
-ALLOWED_HOSTS = [
-    '*',
-]
+    INSTALLED_APPS = Base.INSTALLED_APPS + [
+        'django_extensions',
+    ]
 
-SECRET_KEY = '+0_&9oud0)bh&^un!dolfms5zh1+u^ktdn(gmw67xq8#rg19bx'
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+    SECRET_KEY = '+0_&9oud0)bh&^un!dolfms5zh1+u^ktdn(gmw67xq8#rg19bx'

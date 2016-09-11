@@ -45,6 +45,7 @@ Thumbs.db
 ###################
 *.key
 *.protected
+prod.env
 
 # Images #
 ##########

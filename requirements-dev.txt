@@ -2,6 +2,6 @@
 django-extensions
 flake8
 importanize
-ipython
+ptpython
 watchdog
 Werkzeug

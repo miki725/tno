@@ -9,7 +9,6 @@ from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now
-from django_auxilium.models import UUIDModel
 
 from .conf import EXPIRES_IN_DAYS
 from .crypto import decrypt, derive_key, encrypt
@@ -19,6 +18,9 @@ from .utils import get_entropy
 class OTSecretQuerySet(models.QuerySet):
     def expired(self):
         return self.filter(expires__lte=now())
+
+    def active(self):
+        return self.filter(expires__gt=now())
 
 
 class OTSecretManager(models.Manager):

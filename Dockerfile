@@ -1,23 +1,15 @@
-FROM python:3.4
+FROM python:3.5
 MAINTAINER "Miroslav Shubernetskiy"
-
-COPY tno/ /www
-COPY requirements.txt /www/requirements.txt
 
 WORKDIR /www
 
 ENV DJANGO_SETTINGS_MODULE=tno.settings.prod
+ENV DJANGO_CONFIGURATION=Prod
 
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y \
-    libffi-dev \
-    libssl-dev \
-    libjpeg-dev \
-    libpng12-dev \
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y \
     libpq-dev \
-    libxml2-dev \
-    libxslt1-dev \
     nodejs-legacy \
     npm
 
@@ -29,9 +21,13 @@ RUN npm install -g \
 RUN apt-get clean && \
     rm -rf /var/cache/apt
 
+COPY requirements.txt /www/requirements.txt
+
 RUN pip install -r /www/requirements.txt
 
+COPY tno/ /www
 
 EXPOSE 8888
+
 CMD newrelic-admin run-python \
     /usr/local/bin/gunicorn --config gunicorn.py tno.wsgi:application

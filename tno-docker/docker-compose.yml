@@ -1,0 +1,32 @@
+web:
+  container_name: tno-web
+  build: ../
+  env_file: ./prod.env
+  volumes:
+    - tno-data:/data
+    # - ../tno:/www
+  expose:
+    - 8888
+  links:
+    - postgres
+
+postgres:
+  container_name: tno-postgres
+  image: miki725/postgres
+  volumes:
+    - tno-pgdata:/var/lib/postgresql/data
+  expose:
+    - 5432
+
+nginx:
+  container_name: tno-nginx
+  build: ./nginx
+  volumes:
+    - tno-data:/data
+    - tno-certs:/etc/letsencrypt
+    # - ./nginx/conf:/etc/nginx
+  links:
+    - web
+  ports:
+    - 80:80
+    - 443:443
