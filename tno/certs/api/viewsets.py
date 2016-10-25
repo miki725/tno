@@ -8,7 +8,6 @@ from rest_framework.mixins import (
     DestroyModelMixin,
     ListModelMixin,
     RetrieveModelMixin,
-    UpdateModelMixin,
 )
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -59,7 +58,6 @@ class CertificateViewSet(ListModelMixin,
 class SiteViewSet(ListModelMixin,
                   DestroyModelMixin,
                   RetrieveModelMixin,
-                  UpdateModelMixin,
                   GenericViewSet):
     model = Site
     queryset = (
@@ -87,11 +85,6 @@ class SiteViewSet(ListModelMixin,
             return {}
 
     def update(self, request, host, **kwargs):
-        partial_update = kwargs.pop('partial', False)
-
-        if partial_update:
-            raise MethodNotAllowed(request.method)
-
         try:
             self.get_object()
         except Http404:
