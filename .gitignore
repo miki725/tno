@@ -58,6 +58,7 @@ prod.env
 ###############
 # because less or saass is used
 *.css
+*.pem
 
 # Django-related #
 ##################

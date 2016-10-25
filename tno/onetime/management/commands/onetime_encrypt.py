@@ -30,4 +30,4 @@ class Command(BaseCommand):
             return message.decode('utf-8')
 
         msg = 'Secret: '
-        return self.get_message(raw_input(msg))
+        return self.get_message(input(msg))

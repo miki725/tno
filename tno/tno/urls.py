@@ -10,6 +10,8 @@ from vanilla.views import RedirectView
 
 from core.admin import site
 
+from .router import urlpatterns as api_urlpatterns
+
 
 urlpatterns = [
     url(r'^$',
@@ -17,7 +19,7 @@ urlpatterns = [
                              url=reverse_lazy('onetime:index')),
         name='index'),
 
-    url(r'^api/v1/', include('onetime.api.router')),
+    url(r'^api/v1/', include(api_urlpatterns, namespace='api')),
 
     # login/logout
     url(r'^login/$', login, {'template_name': 'account/login.html'}, name='login'),

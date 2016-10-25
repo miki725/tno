@@ -44,8 +44,8 @@ def encrypt(iv, key, associated_data, plaintext):
 
     # Encrypt the plaintext and get the associated ciphertext.
     # GCM does not require padding.
-    ciphertext = (encryptor.update(plaintext.encode('utf-8'))
-                  + encryptor.finalize())
+    ciphertext = (encryptor.update(plaintext.encode('utf-8')) +
+                  encryptor.finalize())
 
     return ciphertext, encryptor.tag
 
@@ -70,5 +70,5 @@ def decrypt(iv, key, associated_data, tag, ciphertext):
 
     # Decryption gets us the authenticated plaintext.
     # If the tag does not match an InvalidTag exception will be raised.
-    return (decryptor.update(ciphertext)
-            + decryptor.finalize()).decode('utf-8')
+    return (decryptor.update(ciphertext) +
+            decryptor.finalize()).decode('utf-8')

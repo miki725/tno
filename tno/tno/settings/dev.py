@@ -13,8 +13,13 @@ class Dev(Base):
 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'tno.sqlite',
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'tno',
+            'USER': 'tno',
+            'PASSWORD': 'tno',
+            'HOST': 'localhost',
+            'PORT': 5432,
+            'CONN_MAX_AGE': None,
         }
     }
 

@@ -39,7 +39,7 @@ class EntropyViewSet(ViewSet):
     def list(self, request, *args, **kwargs):
         data = {
             'entropy': reverse(
-                request.resolver_match.url_name.replace('list', 'detail'),
+                request.resolver_match.view_name.replace('list', 'detail'),
                 kwargs={
                     'bytes': 123,
                 },
@@ -89,7 +89,7 @@ class OneTimeSecretViewSet(CreateModelMixin,
        client requests server for some additional randomness entropy
        (to be specific 80 bytes or 640 bits).
 
-    2. Client generates 640 bytes (or 640 bits) of its own entropy.
+    2. Client generates 80 bytes (or 640 bits) of its own entropy.
 
     3. Client `XOR`s server and client entropy to increase randomness
        sample quality.

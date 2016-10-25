@@ -26,6 +26,7 @@ class Base(LoggingMixin,
     PROJECT_NAME = os.path.basename(abspath(__file__, '..', '..'))
 
     PROJECT_APPS = [
+        'certs',
         'core',
         'onetime',
     ]

@@ -2,10 +2,10 @@
 from __future__ import print_function, unicode_literals
 
 from django import template
-from django_auxilium.utils.html import simple_minify
 from django.conf import settings
 from django.template import engines
 from django.utils.safestring import mark_safe
+from django_auxilium.utils.html import simple_minify
 
 
 register = template.Library()

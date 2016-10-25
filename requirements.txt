@@ -1,8 +1,10 @@
+certifi
 cryptography
 dateutils
 django-auxilium
 django-braces
 django-configurations
+django-countries
 django-crispy-forms
 django-pipeline
 django-vanilla-views
