@@ -12,7 +12,8 @@
                 "certs",
                 "core",
                 "onetime",
-                "tno"
+                "tno",
+                "user"
             ]
         },
         {

@@ -29,6 +29,7 @@ class Base(LoggingMixin,
         'certs',
         'core',
         'onetime',
+        'user',
     ]
 
     INSTALLED_APPS = PROJECT_APPS + [
@@ -110,3 +111,4 @@ class Base(LoggingMixin,
     LOGOUT_URL = 'logout'
     LOGIN_REDIRECT_URL = '/'
     WSGI_APPLICATION = 'tno.wsgi.application'
+    AUTH_USER_MODEL = 'user.User'
