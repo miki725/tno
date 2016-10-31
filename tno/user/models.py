@@ -10,7 +10,6 @@ from django.contrib.auth.models import (
 from django.core.mail import send_mail
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django_custom_user_migration.models import AbstractUser
 
 
 class User(AbstractBaseUser, PermissionsMixin):
