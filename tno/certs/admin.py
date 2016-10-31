@@ -4,7 +4,7 @@ from django_countries import countries
 
 from core.admin import site
 
-from .models import Certificate, Site
+from .models import Certificate, Site, SiteCollection
 
 
 class CountryFilter(admin.SimpleListFilter):
@@ -48,3 +48,4 @@ class CertificateAdmin(admin.ModelAdmin):
 
 site.register(Certificate, CertificateAdmin)
 site.register(Site)
+site.register(SiteCollection)

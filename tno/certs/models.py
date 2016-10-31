@@ -14,6 +14,7 @@ from cryptography.x509 import (
     NameOID,
     load_pem_x509_certificate,
 )
+from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django_auxilium.models import CreatedModel
@@ -63,7 +64,7 @@ class Certificate(models.Model):
 
     # other metadata about the cert which is inferred from x509
     # but is useful to be stored in DB for reference
-    fingerprint_sha2 = models.CharField(max_length=64, unique=True, db_index=True)
+    fingerprint_sha2 = models.CharField('Fingerprint SHA256', max_length=64, unique=True, db_index=True)
 
     # this is required here and we cant simply infer that information
     # by the lack of trust_certificate because not all root
@@ -262,3 +263,13 @@ class Site(CreatedModel):
 
     def __str__(self) -> str:
         return self.host
+
+
+class SiteCollection(CreatedModel):
+    name = models.CharField(max_length=128)
+    description = models.TextField(blank=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='site_collections')
+    sites = models.ManyToManyField(Site, related_name='site_collections', blank=True)
+
+    def __str__(self) -> str:
+        return self.name

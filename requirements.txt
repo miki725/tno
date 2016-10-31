@@ -7,6 +7,7 @@ django-configurations
 django-countries
 django-crispy-forms
 django-pipeline
+django-rest-framework-braces
 django-vanilla-views
 djangorestframework
 gunicorn

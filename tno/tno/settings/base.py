@@ -105,6 +105,12 @@ class Base(LoggingMixin,
         },
     }]
 
+    # DRF
+    REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 100,
+    }
+
     # URLs
     ROOT_URLCONF = 'tno.urls'
     LOGIN_URL = 'login'

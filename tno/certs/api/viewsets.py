@@ -1,6 +1,6 @@
-from functools import partial
-
+from django.db.models import Prefetch
 from django.http import Http404
+from drf_braces.mixins import MultipleSerializersViewMixin
 from rest_framework import status
 from rest_framework.decorators import detail_route
 from rest_framework.exceptions import MethodNotAllowed
@@ -9,20 +9,18 @@ from rest_framework.mixins import (
     ListModelMixin,
     RetrieveModelMixin,
 )
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 from rest_framework.viewsets import GenericViewSet
 
-from ..models import Certificate, Site
-from ..openssl import x509_text_from_x509
-from .renderers import PlainTextRenderer
-from .serializer import CertificateNestedSerializer, SiteSerializer
-
-
-class SpecifiedPageNumberPagination(PageNumberPagination):
-    def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
+from ..models import Certificate, Site, SiteCollection
+from .renderers import CertificateOpenSSLTextRenderer, CertificatePEMRenderer
+from .serializer import (
+    CertificateNestedSerializer,
+    CertificateSerializer,
+    SiteCollectionSerializer,
+    SiteNestedSerializer,
+)
 
 
 class CertificateViewSet(ListModelMixin,
@@ -42,17 +40,14 @@ class CertificateViewSet(ListModelMixin,
     lookup_url_kwarg = 'fingerprint_sha2'
 
     serializer_class = CertificateNestedSerializer
-    pagination_class = partial(
-        SpecifiedPageNumberPagination,
-        page_size=100,
-    )
 
-    @detail_route(methods=['get'], renderer_classes=[PlainTextRenderer])
-    def text(self, request, *args, **kwargs):
-        object = self.get_object()
-        return Response(
-            data=x509_text_from_x509(object.x509.encode('utf-8')),
-        )
+    @property
+    def renderer_classes(self):
+        renderers = super(CertificateViewSet, self).renderer_classes[:]
+        renderers.append(CertificatePEMRenderer)
+        if self.lookup_url_kwarg in self.kwargs:
+            renderers.append(CertificateOpenSSLTextRenderer)
+        return renderers
 
 
 class SiteViewSet(ListModelMixin,
@@ -64,6 +59,8 @@ class SiteViewSet(ListModelMixin,
         Site.objects
         .select_related(
             'certificate',
+            'certificate__trust_certificate',
+            'certificate__issuer_certificate',
         )
         .all()
     )
@@ -72,11 +69,7 @@ class SiteViewSet(ListModelMixin,
     lookup_url_kwarg = 'host'
     lookup_value_regex = r'[^/]+'
 
-    serializer_class = SiteSerializer
-    pagination_class = partial(
-        SpecifiedPageNumberPagination,
-        page_size=100,
-    )
+    serializer_class = SiteNestedSerializer
 
     def get_success_headers(self, data):
         try:
@@ -108,3 +101,44 @@ class SiteViewSet(ListModelMixin,
             status=status.HTTP_201_CREATED,
             headers=self.get_success_headers(data),
         )
+
+
+class SiteCollectionViewSet(ListModelMixin,
+                            RetrieveModelMixin,
+                            MultipleSerializersViewMixin,
+                            GenericViewSet):
+    model = SiteCollection
+    queryset = (
+        SiteCollection.objects
+        .select_related(
+            'owner',
+        )
+        .prefetch_related(
+            Prefetch('sites', SiteViewSet.queryset),
+        )
+        .all()
+    )
+
+    serializer_class = SiteCollectionSerializer
+
+    @detail_route(methods=['get'],
+                  url_path='trust-certificates',
+                  renderer_classes=api_settings.DEFAULT_RENDERER_CLASSES + [CertificatePEMRenderer])
+    def trust_certificates(self, request, pk, *args, **kwargs):
+        certificates = (
+            Certificate.objects
+            .filter(leaf_certificates__sites__site_collections__in=self.get_queryset())
+            .all()
+        )
+
+        page = self.paginate_queryset(certificates)
+
+        serializer = self.get_serializer(
+            serializer_class=CertificateSerializer,
+            instance=page,
+            many=True,
+        )
+
+        response = self.get_paginated_response(serializer.data)
+        response['Certificates-Length'] = response.data['count']
+        return response
