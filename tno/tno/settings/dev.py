@@ -34,6 +34,10 @@ class Dev(Base):
         'debug_toolbar',
     ]
 
+    MIDDLEWARE_CLASSES = [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ] + Base.MIDDLEWARE_CLASSES
+
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
     SECRET_KEY = '+0_&9oud0)bh&^un!dolfms5zh1+u^ktdn(gmw67xq8#rg19bx'
