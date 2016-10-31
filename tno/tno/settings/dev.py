@@ -31,8 +31,13 @@ class Dev(Base):
 
     INSTALLED_APPS = Base.INSTALLED_APPS + [
         'django_extensions',
+        'debug_toolbar',
     ]
 
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
     SECRET_KEY = '+0_&9oud0)bh&^un!dolfms5zh1+u^ktdn(gmw67xq8#rg19bx'
+
+    INTERNAL_IPS = [
+        '127.0.0.1',
+    ]

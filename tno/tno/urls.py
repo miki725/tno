@@ -33,8 +33,12 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    import debug_toolbar
+
     urlpatterns += [
         url(r'^{}(?P<path>.*)$'.format(settings.MEDIA_URL[1:]),
             serve,
             {'document_root': settings.MEDIA_ROOT}),
+
+        url(r'^__debug__/', include(debug_toolbar.urls)),
     ]
