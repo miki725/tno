@@ -97,17 +97,15 @@ class SiteBaseSerializer(serializers.ModelSerializer):
     # 255 bytes - 2 bytes (length + trailing dot) = 253 bytes
     # TODO correctly validate host
     host = serializers.CharField(max_length=253, read_only=True)
-    # only support 443 port for now which will only support
-    # standard https sites served under 443
-    port = serializers.IntegerField(min_value=443, max_value=443, read_only=True)
 
     class Meta(object):
         model = Site
-        writable_fields = []
+        writable_fields = [
+            'host',
+        ]
         fields = [
             'url',
             'host',
-            'port',
         ]
         read_only_fields = list(set(fields) - set(writable_fields))
 

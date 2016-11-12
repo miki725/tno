@@ -46,6 +46,18 @@ class CertificateAdmin(admin.ModelAdmin):
     ]
 
 
+class SiteAdmin(admin.ModelAdmin):
+    raw_id_fields = [
+        'certificate',
+    ]
+
+
+class SiteCollectionAdmin(admin.ModelAdmin):
+    raw_id_fields = [
+        'owner',
+    ]
+
+
 site.register(Certificate, CertificateAdmin)
-site.register(Site)
-site.register(SiteCollection)
+site.register(Site, SiteAdmin)
+site.register(SiteCollection, SiteCollectionAdmin)

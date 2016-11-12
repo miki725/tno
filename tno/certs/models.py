@@ -245,7 +245,6 @@ class SiteManager(models.Manager):
 
 class Site(CreatedModel):
     host = models.CharField(max_length=256, unique=True, db_index=True)
-    port = models.PositiveSmallIntegerField(default=443)
     certificate = models.ForeignKey(Certificate, related_name='sites')
 
     objects = SiteManager()

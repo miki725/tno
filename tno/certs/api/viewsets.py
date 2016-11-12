@@ -86,11 +86,7 @@ class SiteViewSet(ListModelMixin,
             raise MethodNotAllowed(request.method)
 
         serializer = self.get_serializer(
-            data={'host': host, 'port': 443},
-            writable_fields=[
-                'host',
-                'port',
-            ],
+            data={'host': host},
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()

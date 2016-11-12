@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('valid_not_after', models.DateField()),
                 ('key_type', models.CharField(choices=[('RSA', 'RSA'), ('DSA', 'DSA'), ('EC', 'Elliptic Curve')], max_length=3)),
                 ('key_size', models.PositiveIntegerField(blank=True, null=True)),
-                ('fingerprint_sha2', models.CharField(db_index=True, max_length=64, unique=True)),
+                ('fingerprint_sha2', models.CharField(db_index=True, max_length=64, unique=True, verbose_name='Fingerprint SHA256')),
                 ('issuer_certificate', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='children_certificates', to='certs.Certificate')),
                 ('root_certificate', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='leaf_certificates', to='certs.Certificate')),
             ],
