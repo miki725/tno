@@ -152,9 +152,12 @@ class SiteNestedSerializer(SiteBaseSerializer):
 class SiteCollectionSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         'api:site-collections-detail',
+        lookup_field='uuid_hex',
+        lookup_url_kwarg='uuid',
         label='URL',
         read_only=True,
     )
+    uuid = serializers.UUIDField(format='hex')
     owner = UserSerializer(read_only=True)
     sites = SiteSerializer(many=True, read_only=True)
 
@@ -166,6 +169,7 @@ class SiteCollectionSerializer(serializers.ModelSerializer):
         ]
         fields = [
             'url',
+            'uuid',
             'name',
             'description',
             'owner',

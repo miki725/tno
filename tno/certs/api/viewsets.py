@@ -115,12 +115,15 @@ class SiteCollectionViewSet(ListModelMixin,
         .all()
     )
 
+    lookup_field = 'uuid'
+    lookup_url_kwarg = 'uuid'
+
     serializer_class = SiteCollectionSerializer
 
     @detail_route(methods=['get'],
                   url_path='trust-certificates',
                   renderer_classes=api_settings.DEFAULT_RENDERER_CLASSES + [CertificatePEMRenderer])
-    def trust_certificates(self, request, pk, *args, **kwargs):
+    def trust_certificates(self, request, uuid, *args, **kwargs):
         certificates = (
             Certificate.objects
             .filter(leaf_certificates__sites__site_collections__in=self.get_queryset())

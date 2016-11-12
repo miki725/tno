@@ -1,4 +1,5 @@
 import typing
+import uuid
 from binascii import hexlify
 from fnmatch import fnmatch
 
@@ -265,10 +266,23 @@ class Site(CreatedModel):
 
 
 class SiteCollection(CreatedModel):
-    name = models.CharField(max_length=128)
+    uuid = models.UUIDField(
+        editable=False,
+        unique=True,
+        db_index=True,
+        default=uuid.uuid4,
+    )
+    name = models.CharField(max_length=128, blank=True)
     description = models.TextField(blank=True)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='site_collections')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='site_collections', blank=True, null=True)
     sites = models.ManyToManyField(Site, related_name='site_collections', blank=True)
 
     def __str__(self) -> str:
         return self.name
+
+    @property
+    def uuid_hex(self):
+        try:
+            return self.uuid.hex
+        except AttributeError:
+            return None

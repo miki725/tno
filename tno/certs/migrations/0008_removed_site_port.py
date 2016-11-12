@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
+from django.db import migrations
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('certs', '0008_added_site_collection'),
+        ('certs', '0007_removed_root_certiticate'),
     ]
 
     operations = [
