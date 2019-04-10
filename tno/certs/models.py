@@ -82,8 +82,19 @@ class Certificate(models.Model):
     is_trusted = models.BooleanField(default=False)
 
     # relations
-    trust_certificate = models.ForeignKey('Certificate', related_name='leaf_certificates', null=True, blank=True)
-    issuer_certificate = models.ForeignKey('Certificate', related_name='children_certificates', null=True, blank=True)
+    trust_certificate = models.ForeignKey(
+        'Certificate',
+        related_name='leaf_certificates',
+        null=True,
+        blank=True,
+        help_text=''
+    )
+    issuer_certificate = models.ForeignKey(
+        'Certificate',
+        related_name='children_certificates',
+        null=True,
+        blank=True,
+    )
 
     objects = CertificateManager.from_queryset(CertificateQuerySet)()
 
@@ -252,7 +263,7 @@ class Site(CreatedModel):
 
     def update_certificate(self, commit: bool=True) -> None:
         certificate = None
-        for x509_data in reversed(x509_from_server(self.host, self.port)):
+        for x509_data in reversed(x509_from_server(self.host, 443)):
             certificate = self.get_or_create_by_fingerprint(Certificate.from_x509(x509_data))
         assert certificate
 

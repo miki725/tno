@@ -3,7 +3,7 @@ from django.http import Http404
 from drf_braces.mixins import MultipleSerializersViewMixin
 from rest_framework import status
 from rest_framework.decorators import detail_route
-from rest_framework.exceptions import MethodNotAllowed
+from rest_framework.exceptions import MethodNotAllowed, PermissionDenied
 from rest_framework.mixins import (
     DestroyModelMixin,
     ListModelMixin,
@@ -119,6 +119,24 @@ class SiteCollectionViewSet(ListModelMixin,
     lookup_url_kwarg = 'uuid'
 
     serializer_class = SiteCollectionSerializer
+
+    @property
+    def is_detail(self):
+        return bool(self.kwargs.get(self.lookup_url_kwarg))
+
+    def get_queryset(self):
+        qs = super(SiteCollectionViewSet, self).get_queryset()
+        # in list view, only allow owners to list their site collections
+        # otherwise raise permission denied
+        # note that since UUID is unique enough, users can still
+        # query any site collection via specific UUID regardless
+        # if they are signed in
+        if not self.is_detail:
+            if self.request.user.is_authenticated:
+                qs = qs.filter(owner=self.request.user)
+            else:
+                raise PermissionDenied
+        return qs
 
     @detail_route(methods=['get'],
                   url_path='trust-certificates',

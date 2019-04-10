@@ -53,6 +53,11 @@ class SiteAdmin(admin.ModelAdmin):
 
 
 class SiteCollectionAdmin(admin.ModelAdmin):
+    list_display = [
+        'uuid',
+        'name',
+        'owner',
+    ]
     raw_id_fields = [
         'owner',
     ]
